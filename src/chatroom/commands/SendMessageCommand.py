@@ -1,6 +1,6 @@
 class SendMessageCommand:
 
-    def __init__(self) -> None:
+    def __init__(self, repository) -> None:
         self.user = ""
         self.message = ""
 
