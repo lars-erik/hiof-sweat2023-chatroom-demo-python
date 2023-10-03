@@ -5,6 +5,7 @@ from chatroom.model.chatmessage import ChatMessage
 
 
 class ChatMessageRepository:
+
     def get(self, id: uuid) -> ChatMessage:
         pass
 

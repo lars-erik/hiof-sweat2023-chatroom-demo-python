@@ -1,3 +1,6 @@
 pytest
 approvaltests
 pytest-approvaltests
+flask
+injector
+flask-injector
