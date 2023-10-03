@@ -2,6 +2,7 @@ import uuid
 
 from injector import inject
 
+from chatroom.distribution.ChatMessageNotifier import ChatMessageNotifier
 from chatroom.model.chatmessage import ChatMessage
 from chatroom.persistence.ChatMessageRepository import ChatMessageRepository
 
@@ -9,10 +10,13 @@ from chatroom.persistence.ChatMessageRepository import ChatMessageRepository
 class SendMessageCommand:
 
     @inject
-    def __init__(self, repository: ChatMessageRepository) -> None:
+    def __init__(self, repository: ChatMessageRepository, notifier: ChatMessageNotifier) -> None:
         self.repository = repository
+        self.notifier = notifier
         self.user = ""
         self.message = ""
 
     def execute(self):
-        self.repository.add(ChatMessage(uuid.uuid4(), self.user, self.message))
+        message = ChatMessage(uuid.uuid4(), self.user, self.message)
+        self.repository.add(message)
+        self.notifier.notify(message)
