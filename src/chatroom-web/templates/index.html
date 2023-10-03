@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Chatroom</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js" integrity="sha512-q/dWJ3kcmjBLU4Qc47E4A9kTB4m3wuTY7vkFJDTZKjTs8jhyGQnaUrxa0Ytd0ssMZhbNua9hE+E7Qv1j+DyZwA==" crossorigin="anonymous"></script>
+</head>
+<body>
+<div class="container">
+    <form onsubmit="return false;">
+        <div class="form-group">
+            <label for="username">Username:</label>
+            <input type="text" class="form-control" name="username" id="username"/>
+        </div>
+        <div class="form-group">
+            <label for="message">Message:</label>
+            <textarea class="form-control" name="message" id="message"></textarea>
+        </div>
+        <div class="form-group">
+            <button class="btn btn-primary" id="sendBtn">Send</button>
+        </div>
+    </form>
+    <div id="log">
+        <!-- TODO: Jinjify -->
+        <pre ></pre>
+    </div>
+</div>
+<script type="text/javascript" charset="utf-8">
+    var socket = io();
+    socket.on('connect', function() {
+        console.log('connected');
+
+    });
+
+    socket.on('chatmessage', function(data) {
+        console.log("Received " + JSON.stringify(data));
+    });
+
+    const username = document.getElementById('username'),
+          message = document.getElementById('message'),
+          button = document.getElementById('sendBtn');
+
+    function sendMessage() {
+        fetch('/chat', {
+            method: 'post',
+            body: JSON.stringify({message: message.value, user: username.value}),
+            headers: {
+                "content-type": "application/json"
+            }
+        });
+    }
+
+    button.addEventListener("click", sendMessage);
+</script>
+</body>
+</html>

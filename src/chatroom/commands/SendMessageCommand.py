@@ -1,11 +1,14 @@
 import uuid
 
-from src.chatroom.model.chatmessage import ChatMessage
-from src.chatroom.persistence.ChatMessageRepository import ChatMessageRepository
+from injector import inject
+
+from chatroom.model.chatmessage import ChatMessage
+from chatroom.persistence.ChatMessageRepository import ChatMessageRepository
 
 
 class SendMessageCommand:
 
+    @inject
     def __init__(self, repository: ChatMessageRepository) -> None:
         self.repository = repository
         self.user = ""
