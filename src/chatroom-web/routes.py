@@ -1,7 +1,7 @@
 from flask import render_template, jsonify, request, Response
 from injector import inject
 
-from chatroom.commands.SendMessageCommand import SendMessageCommand
+from chatroom.commands import SendMessageCommand
 from chatroom.persistence import ChatMessageRepository
 
 
@@ -12,12 +12,12 @@ def configure_routes(app):
     def index(repo:ChatMessageRepository):
         return render_template(
             "index.html",
-            message=str(len(repo.query()))
+            messages=repo.query()
         )
 
     @app.route('/chat', methods=['POST'])
     @inject
     def chat(cmd:SendMessageCommand):
-        cmd.__dict__.update(request.form)
+        cmd.__dict__.update(request.json)
         cmd.execute()
         return Response(status=200)

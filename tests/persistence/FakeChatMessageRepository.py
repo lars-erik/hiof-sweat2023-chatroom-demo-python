@@ -1,8 +1,8 @@
 import uuid
 from typing import Iterable
 
-from chatroom.model.chatmessage import ChatMessage
-from chatroom.persistence.ChatMessageRepository import ChatMessageRepository
+from chatroom.model import ChatMessage
+from chatroom.persistence import ChatMessageRepository
 
 
 class FakeChatMessageRepository(ChatMessageRepository):
@@ -18,6 +18,7 @@ class FakeChatMessageRepository(ChatMessageRepository):
 
     def add(self, message: ChatMessage):
         self.items.append(message)
+        pass
 
     def delete(self, message: ChatMessage):
         self.items.remove(message)

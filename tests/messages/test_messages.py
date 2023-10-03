@@ -3,10 +3,10 @@ import pytest
 from approvaltests import Options
 from approvaltests.scrubbers import scrub_all_guids
 
-from chatroom.distribution.ChatMessageNotifier import ChatMessageNotifier
-from chatroom.model.chatmessage import ChatMessage
-from persistence.FakeChatMessageRepository import FakeChatMessageRepository
-from chatroom.commands.SendMessageCommand import SendMessageCommand
+from chatroom.commands import SendMessageCommand
+from chatroom.distribution import ChatMessageNotifier
+from chatroom.model import ChatMessage
+from persistence import FakeChatMessageRepository
 
 approval_options = Options().with_scrubber(scrub_all_guids)
 

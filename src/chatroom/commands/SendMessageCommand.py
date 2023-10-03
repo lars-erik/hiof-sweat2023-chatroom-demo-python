@@ -4,7 +4,7 @@ from injector import inject
 
 from chatroom.distribution.ChatMessageNotifier import ChatMessageNotifier
 from chatroom.model.chatmessage import ChatMessage
-from chatroom.persistence.ChatMessageRepository import ChatMessageRepository
+from chatroom.persistence import ChatMessageRepository
 
 
 class SendMessageCommand:

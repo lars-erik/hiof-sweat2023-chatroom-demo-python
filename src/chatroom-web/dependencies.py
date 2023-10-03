@@ -1,9 +1,14 @@
-from injector import Module, Binder, ClassProvider, singleton
+from injector import Binder, singleton
 
-from chatroom.commands.SendMessageCommand import SendMessageCommand
+from WebSocketNotifier import WebSocketNotifier
+from chatroom.commands import SendMessageCommand
+from chatroom.distribution import ChatMessageNotifier
 from chatroom.persistence import ChatMessageRepository
-from persistence.FakeChatMessageRepository import FakeChatMessageRepository
+from persistence import FakeChatMessageRepository
+
 
 def configure_dependencies(binder: Binder) -> None:
     binder.bind(ChatMessageRepository, to=FakeChatMessageRepository, scope=singleton)
+    binder.bind(ChatMessageNotifier, to=WebSocketNotifier)
     binder.bind(SendMessageCommand, to=SendMessageCommand)
+

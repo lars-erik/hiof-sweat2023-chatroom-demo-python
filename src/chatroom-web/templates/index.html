@@ -22,24 +22,26 @@
         </div>
     </form>
     <div id="log">
-        <!-- TODO: Jinjify -->
-        <pre ></pre>
+        {% for message in messages %}
+        <pre>{{message.user}}: {{message.message}}</pre>
+        {% endfor %}
     </div>
 </div>
 <script type="text/javascript" charset="utf-8">
-    var socket = io();
+    const username = document.getElementById('username'),
+          message = document.getElementById('message'),
+          button = document.getElementById('sendBtn'),
+          log = document.getElementById('log'),
+          socket = io();
     socket.on('connect', function() {
         console.log('connected');
-
     });
 
     socket.on('chatmessage', function(data) {
-        console.log("Received " + JSON.stringify(data));
+        const entry = document.createElement("pre");
+        entry.innerText = `${data.user}: ${data.message}`;
+        log.appendChild(entry);
     });
-
-    const username = document.getElementById('username'),
-          message = document.getElementById('message'),
-          button = document.getElementById('sendBtn');
 
     function sendMessage() {
         fetch('/chat', {
