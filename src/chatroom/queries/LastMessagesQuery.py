@@ -11,7 +11,10 @@ class LastMessagesQuery():
         self.repo = repo
 
     def execute(self):
-        count = len(self.repo.query())
-        result = self.repo.query()[count - 10:]
-        result.sort(key=lambda x: x.time, reverse=True)
+        result = (
+            self.repo.query()
+                .order_by_descending(ChatMessage.time)
+                .limit(10)
+        )
         return result
+

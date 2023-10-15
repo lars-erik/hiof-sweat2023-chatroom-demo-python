@@ -17,7 +17,7 @@ class DatabaseInitializer:
     def initialize(cls, connection_string):
         if cls.metadata is None:
             cls.connection_string = connection_string
-            cls.engine = create_engine(connection_string)
+            cls.engine = create_engine(connection_string, echo=True)
             cls.session_maker = sessionmaker(bind=cls.engine)
             cls.metadata = MetaData()
 
@@ -43,6 +43,11 @@ class DatabaseInitializer:
         return cls.session_maker()
 
     @classmethod
+    def ensure_database(cls):
+        if (not cls.database_exists()):
+            cls.create_database()
+
+    @classmethod
     def create_database(cls):
         """
         Creates the required tables in the database
@@ -58,9 +63,19 @@ class DatabaseInitializer:
         """
         cls.metadata.drop_all(cls.engine)
         cls.engine.dispose()
+        exists = cls.database_exists()
+        if exists:
+            os.remove(cls.get_path())
+
+    @classmethod
+    def database_exists(cls):
+        exists = os.path.exists(cls.get_path())
+        return exists
+
+    @classmethod
+    def get_path(cls):
         path = cls.connection_string.replace('sqlite:///', '')
-        if os.path.exists(path):
-            os.remove(path)
+        return path
 
     @classmethod
     def recreate_database(cls):

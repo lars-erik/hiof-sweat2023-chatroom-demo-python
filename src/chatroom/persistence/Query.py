@@ -11,3 +11,6 @@ class Query:
 
     def limit(self, max):
         pass
+
+    def order_by_descending(self, name):
+        pass

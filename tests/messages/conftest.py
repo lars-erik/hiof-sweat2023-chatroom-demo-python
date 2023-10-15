@@ -25,7 +25,9 @@ def unit_of_work():
         yield uow
         uow.close()
         DatabaseInitializer.remove_database()
-    return UnitOfWork()
+    else:
+        ChatMessage.time = 'time'
+        yield UnitOfWork()
 
 @pytest.fixture
 def repository(unit_of_work):

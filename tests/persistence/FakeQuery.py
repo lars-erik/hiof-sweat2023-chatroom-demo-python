@@ -24,3 +24,8 @@ class FakeQuery(Query):
 
     def limit(self, max):
         return FakeQuery(self.all[0:max])
+
+    def order_by_descending(self, name):
+        items = self.all
+        items.sort(key=lambda x: x.__dict__[name], reverse=True)
+        return FakeQuery(items)
