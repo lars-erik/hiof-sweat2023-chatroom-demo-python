@@ -1,16 +1,29 @@
-from flask import Flask
+from flask import Flask, g
 from flask_socketio import SocketIO
+from injector import inject
 
+from chatroom.persistence import UnitOfWork
+from chatroom_database import DatabaseInitializer
 from dependencies import configure_dependencies
 from routes import configure_routes
 from flask_injector import FlaskInjector
 
 app = Flask(__name__)
 socketio = SocketIO(app)
+the_injector = None
+
+def commit_and_cleanup(data):
+    uow = the_injector.injector.get(UnitOfWork)
+    uow.commit()
+    uow.close()
 
 if __name__ == "__main__":
     configure_routes(app)
 
-    FlaskInjector(app=app, modules=[configure_dependencies])
+    DatabaseInitializer.initialize('sqlite:///chatroom.db')
+    DatabaseInitializer.ensure_database()
+
+    the_injector = FlaskInjector(app=app, modules=[configure_dependencies])
+    app.teardown_request(commit_and_cleanup)
 
     socketio.run(app, allow_unsafe_werkzeug=True)

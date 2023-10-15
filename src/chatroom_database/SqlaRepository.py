@@ -1,7 +1,7 @@
 from injector import inject
 
 from chatroom.model import ChatMessage
-from chatroom.persistence import ChatMessageRepository
+from chatroom.persistence import ChatMessageRepository, UnitOfWork
 from chatroom_database import SqlaUnitOfWork
 from chatroom_database.QueryWrapper import QueryWrapper
 
@@ -30,5 +30,5 @@ class SqlaRepository(ChatMessageRepository):
 class SqlaChatMessageRepository(SqlaRepository):
 
     @inject
-    def __init__(self, uow: SqlaUnitOfWork):
+    def __init__(self, uow: UnitOfWork):
         super().__init__(uow, ChatMessage, "id")

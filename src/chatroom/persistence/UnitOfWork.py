@@ -1,5 +1,5 @@
 class UnitOfWork:
-    def saveChanges(self) -> None:
+    def commit(self) -> None:
         pass
 
     def close(self) -> None:

@@ -23,7 +23,7 @@
     </form>
     <div id="log">
         {% for message in messages %}
-        <pre>{{message.user}}: {{message.message}}</pre>
+        <pre>{{message.time.strftime("%H:%M:%S")}} {{message.user}}: {{message.message}}</pre>
         {% endfor %}
     </div>
 </div>
@@ -39,8 +39,9 @@
 
     socket.on('chatmessage', function(data) {
         const entry = document.createElement("pre");
-        entry.innerText = `${data.user}: ${data.message}`;
-        log.appendChild(entry);
+        const time = new Date(data.time);
+        entry.innerText = `${time.toTimeString().substring(0, 8)} ${data.user}: ${data.message}`;
+        log.insertBefore(entry, log.firstChild);
     });
 
     function sendMessage() {

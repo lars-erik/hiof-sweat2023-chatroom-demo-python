@@ -1,15 +1,18 @@
-from injector import Binder, singleton
+from flask import g
+from flask_injector import request
+from injector import Binder
 
 from WebSocketNotifier import WebSocketNotifier
 from chatroom.commands import SendMessageCommand
 from chatroom.distribution import ChatMessageNotifier
-from chatroom.persistence import ChatMessageRepository
+from chatroom.persistence import ChatMessageRepository, UnitOfWork
 from chatroom.queries import LastMessagesQuery
-from persistence import FakeChatMessageRepository
-
+from chatroom_database import SqlaUnitOfWork
+from chatroom_database.SqlaRepository import SqlaChatMessageRepository
 
 def configure_dependencies(binder: Binder) -> None:
-    binder.bind(ChatMessageRepository, to=FakeChatMessageRepository, scope=singleton)
+    binder.bind(UnitOfWork, to=SqlaUnitOfWork, scope=request)
+    binder.bind(ChatMessageRepository, to=SqlaChatMessageRepository, scope=request)
     binder.bind(ChatMessageNotifier, to=WebSocketNotifier)
     binder.bind(SendMessageCommand, to=SendMessageCommand)
     binder.bind(LastMessagesQuery, to=LastMessagesQuery)
