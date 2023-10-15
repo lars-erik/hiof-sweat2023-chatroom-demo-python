@@ -1,12 +1,11 @@
-from flask import Flask, g
+from flask import Flask
+from flask_injector import FlaskInjector
 from flask_socketio import SocketIO
-from injector import inject
 
 from chatroom.persistence import UnitOfWork
 from chatroom_database import DatabaseInitializer
 from dependencies import configure_dependencies
 from routes import configure_routes
-from flask_injector import FlaskInjector
 
 app = Flask(__name__)
 socketio = SocketIO(app)
