@@ -1,0 +1,12 @@
+Chat log
+
+0) ChatMessage(2023-10-10 10:10:10, Me: 10)
+1) ChatMessage(2023-10-10 10:10:09, Me: 9)
+2) ChatMessage(2023-10-10 10:10:08, Me: 8)
+3) ChatMessage(2023-10-10 10:10:07, Me: 7)
+4) ChatMessage(2023-10-10 10:10:06, Me: 6)
+5) ChatMessage(2023-10-10 10:10:05, Me: 5)
+6) ChatMessage(2023-10-10 10:10:04, Me: 4)
+7) ChatMessage(2023-10-10 10:10:03, Me: 3)
+8) ChatMessage(2023-10-10 10:10:02, Me: 2)
+9) ChatMessage(2023-10-10 10:10:01, Me: 1)
