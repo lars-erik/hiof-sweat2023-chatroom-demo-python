@@ -1,3 +1,4 @@
+import os
 from datetime import datetime
 
 import approvaltests
@@ -16,7 +17,7 @@ class Test_when_sending_messages:
         command.message = "This is Red Leader. We're approaching the Ison Corridor!"
         command.execute()
 
-        message = repository.query()[-1]
+        message = repository.query()[0]
         approvaltests.verify(message)
 
     def test_messages_are_broadcast_to_everyone(self, command, notifier):

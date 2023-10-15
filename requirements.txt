@@ -5,3 +5,4 @@ flask
 injector
 flask-injector
 flask_socketio
+SQLAlchemy
