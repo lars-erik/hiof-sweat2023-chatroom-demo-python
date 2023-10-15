@@ -2,6 +2,7 @@ import uuid
 from typing import Iterable
 
 from chatroom.model.chatmessage import ChatMessage
+from chatroom.persistence import Query
 
 
 class ChatMessageRepository:
@@ -9,7 +10,7 @@ class ChatMessageRepository:
     def get(self, id: uuid) -> ChatMessage:
         pass
 
-    def query(self) -> Iterable[ChatMessage]:
+    def query(self) -> Query:
         pass
 
     def add(self, message: ChatMessage):

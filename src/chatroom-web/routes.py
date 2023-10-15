@@ -2,17 +2,17 @@ from flask import render_template, jsonify, request, Response
 from injector import inject
 
 from chatroom.commands import SendMessageCommand
-from chatroom.persistence import ChatMessageRepository
+from chatroom.queries import LastMessagesQuery
 
 
 def configure_routes(app):
 
     @app.route('/')
     @inject
-    def index(repo:ChatMessageRepository):
+    def index(query:LastMessagesQuery):
         return render_template(
             "index.html",
-            messages=repo.query()
+            messages=query.execute()
         )
 
     @app.route('/chat', methods=['POST'])

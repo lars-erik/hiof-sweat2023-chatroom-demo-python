@@ -1,0 +1,1 @@
+ChatMessage(2023-10-10 10:10:10, Luke Skywalker: This is Red Leader. We're approaching the Ison Corridor!)

@@ -1,0 +1,1 @@
+from .LastMessagesQuery import LastMessagesQuery

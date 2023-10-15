@@ -2,7 +2,8 @@ import uuid
 from typing import Iterable
 
 from chatroom.model import ChatMessage
-from chatroom.persistence import ChatMessageRepository
+from chatroom.persistence import ChatMessageRepository, Query
+from persistence.FakeQuery import FakeQuery
 
 
 class FakeChatMessageRepository(ChatMessageRepository):
@@ -13,12 +14,11 @@ class FakeChatMessageRepository(ChatMessageRepository):
     def get(self, id: uuid) -> ChatMessage:
         return [item for item in self.items if item.id == id][0]
 
-    def query(self) -> Iterable[ChatMessage]:
-        return self.items
+    def query(self) -> Query:
+        return FakeQuery(self.items)
 
     def add(self, message: ChatMessage):
         self.items.append(message)
-        pass
 
     def delete(self, message: ChatMessage):
         self.items.remove(message)
