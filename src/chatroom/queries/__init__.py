@@ -1,1 +1,2 @@
-from .LastMessagesQuery import LastMessagesQuery
+from .LastMessagesQuery import LastMessagesQuery, LastMessagesQueryHandler
+from .abstractions import Query, QueryHandler

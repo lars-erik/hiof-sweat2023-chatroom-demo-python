@@ -3,7 +3,7 @@ from datetime import datetime
 
 import pytest
 
-from chatroom.commands import SendMessageCommand
+from chatroom.commands import SendMessageCommandHandler
 from chatroom.distribution import ChatMessageNotifier
 from chatroom.model import ChatMessage, TimeFactory
 from chatroom.persistence import UnitOfWork
@@ -38,8 +38,8 @@ def notifier():
     return SpyChatMessageNotifier()
 
 @pytest.fixture
-def command(repository, notifier):
-    return SendMessageCommand(repository, notifier)
+def send_message_handler(repository, notifier):
+    return SendMessageCommandHandler(repository, notifier)
 
 
 class SpyChatMessageNotifier(ChatMessageNotifier):

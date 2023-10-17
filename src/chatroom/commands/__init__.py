@@ -1,1 +1,2 @@
-from .SendMessageCommand import SendMessageCommand
+from .SendMessageCommand import SendMessageCommand, SendMessageCommandHandler
+from .abstractions import Command, CommandHandler

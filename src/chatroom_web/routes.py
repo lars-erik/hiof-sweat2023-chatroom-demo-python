@@ -1,24 +1,24 @@
-from flask import render_template, jsonify, request, Response
+from flask import render_template, request, Response
 from injector import inject
 
-from chatroom.commands import SendMessageCommand
-from chatroom.persistence import UnitOfWork
-from chatroom.queries import LastMessagesQuery
+from chatroom.commands import SendMessageCommand, CommandHandler
+from chatroom.queries import LastMessagesQuery, QueryHandler
 
 
 def configure_routes(app):
 
     @app.route('/')
     @inject
-    def index(query:LastMessagesQuery):
+    def index(handler:QueryHandler[LastMessagesQuery]):
         return render_template(
             "index.html",
-            messages=query.execute()
+            messages=handler.execute(LastMessagesQuery())
         )
 
     @app.route('/chat', methods=['POST'])
     @inject
-    def chat(cmd:SendMessageCommand, uow:UnitOfWork):
+    def chat(handler:CommandHandler[SendMessageCommand]):
+        cmd = SendMessageCommand()
         cmd.__dict__.update(request.json)
-        cmd.execute()
+        handler.execute(cmd)
         return Response(status=200)
