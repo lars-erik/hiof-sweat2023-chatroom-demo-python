@@ -1,9 +1,9 @@
 from injector import inject
 
-from chatroom.model import ChatMessage
 from chatroom.persistence import ChatMessageRepository, UnitOfWork
-from chatroom_database import SqlaUnitOfWork
+from chatroom.persistence.ChatMessageRepository import ChatMessage
 from chatroom_database.QueryWrapper import QueryWrapper
+
 
 class SqlaRepository(ChatMessageRepository):
 
@@ -22,10 +22,12 @@ class SqlaRepository(ChatMessageRepository):
         self.uow.session.delete(entity)
 
     def get(self, id):
-        return self.uow.session.query(self.entity_class).filter(getattr(self.entity_class, self.primary_key) == id).first()
+        return self.uow.session.query(self.entity_class).filter(
+            getattr(self.entity_class, self.primary_key) == id).first()
 
     def query(self):
         return QueryWrapper(self.uow.session.query(self.entity_class))
+
 
 class SqlaChatMessageRepository(SqlaRepository):
 
